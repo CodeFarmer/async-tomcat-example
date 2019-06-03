@@ -1,0 +1,26 @@
+
+plugins {
+    id "java"
+    id "war"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    // compile 'com.ning:async-http-client:1.9.40' // last updated 2016
+    compile 'org.asynchttpclient:async-http-client:2.8.1' // 2.9.0 is out
+}
+
+war {
+    archiveName = 'at-ex.war'
+}
+
+clean {
+    delete 'at-ex.war'
+}

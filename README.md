@@ -28,7 +28,7 @@ $ docker build -t tomcat-async-example .
 $ docker run -p 8082:8080 tomcat-async-example:latest
 
 # another terminal - this next bit is Mac-specific but you get the idea
-$ open 'http://localhost:8r82/at-ex?q=sometimes+i+wonder'
+$ open 'http://localhost:8082/at-ex?q=sometimes+i+wonder'
 ```
 
 ## What next?

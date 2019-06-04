@@ -24,7 +24,7 @@ The only nonobvious thing here is the passing of the HttpServletResponse and Asy
 
 ```bash
 $ ./gradlew build war
-$ docker docker build -t tomcat-async-example .
+$ docker build -t tomcat-async-example .
 $ docker run -p 8082:8080 tomcat-async-example:latest
 
 # another terminal - this next bit is Mac-specific but you get the idea

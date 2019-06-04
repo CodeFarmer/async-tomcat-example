@@ -6,7 +6,7 @@ End-to-end asynchronous servlet example with Tomcat Docker container, demonstrat
 
 Non-blocking HTTP examples are fairly common, but a lot of them only do non-blocking connections to the server. If your service makes outbound connections of its own, then you can handle blocking calls using patterns with Runnable and executors (which then have the same problems you're trying to avoid by using the Servlet 3 nonblocking tools), or your service logic needs to be non-blocking from end to end.
 
-The downstreams calls need to coordinate, then when they have all returned, complete the response to your client.
+The downstream calls need to coordinate, then when they have all returned, complete the response to your client.
 
 Java CompletableFutures are a good solution to this problem: you can assemble all of your logic at incoming request time, start your nonblocking downstream requests, and leave them with a callback allowing writing to the final response, and return your servlet container's request handler thread immediately. The Futures are a very readable abstraction that hides details of the "callback hell" that was our original response to the non-blocking IO paradigm.
 
@@ -28,7 +28,7 @@ $ docker docker build -t tomcat-async-example .
 $ docker run -p 8082:8080 tomcat-async-example:latest
 
 # another terminal - this next bit is Mac-specific but you get the idea
-$ open http://localhost:8r82/at-ex?q=sometimes+i+wonder
+$ open 'http://localhost:8r82/at-ex?q=sometimes+i+wonder'
 ```
 
 ## What next?

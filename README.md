@@ -18,7 +18,7 @@ For the incoming thread I've just used Tomcat's Servlet 3 async support - the se
 
 For the downstream requests I have used [AsyncHttpClient](https://github.com/AsyncHttpClient/async-http-client), though you could equally use raw Netty (which it is a wrapper for) as long as you're willing to build your own Futures in callbacks.
 
-The only nonobvious thing here is the passing of the HttpServletResponse and AsyncContext to the final step in the chain of Futures (`writeResponseBody`, which returns the handler proper), ensuring that they don't get prematurely garbage collected and can be used to write things back to the client socket once the downstream requests have returned. Once that is done, the controlling thread (in this case probably Netty's callback handler, though in other frameworks this is not the case) releases all of the Futures and they are garbage collected.
+The only nonobvious thing here is the passing of the HttpServletResponse and AsyncContext to the final step in the chain of Futures (`writeResponseBody`, which returns the handler proper), ensuring that they don't get prematurely garbage collected (because the returned lambda object is itself a closure, containing references to them) and can be used to write things back to the client socket once the downstream requests have returned. Once that is done, the controlling thread (in this case probably Netty's callback handler, though in other frameworks this is not the case) releases all of the Futures and they are garbage collected.
 
 ## Running
 

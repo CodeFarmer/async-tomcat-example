@@ -20,6 +20,17 @@ For the downstream requests I have used [AsyncHttpClient](https://github.com/Asy
 
 The only nonobvious thing here is the passing of the HttpServletResponse and AsyncContext to the final step in the chain of Futures (`writeResponseBody`, which returns the handler proper), ensuring that they don't get prematurely garbage collected and can be used to write things back to the client socket once the downstream requests have returned. Once that is done, the controlling thread (in this case probably Netty's callback handler, though in other frameworks this is not the case) releases all of the Futures and they are garbage collected.
 
+## Running
+
+```bash
+$ ./gradlew build war
+$ docker docker build -t tomcat-async-example .
+$ docker run -p 8082:8080 tomcat-async-example:latest
+
+# another terminal - this next bit is Mac-specific but you get the idea
+$ open http://localhost:8r82/at-ex?q=sometimes+i+wonder
+```
+
 ## What next?
 
 This is a really simple example. It gets more exciting when the results of downstream requests are used to spawn further requests and conditionally do even more complcated things. Error handling is a whole other kettle of fish. And it's almost certainly better not to do all this in the servlet's `service` body... you very quickly start building bigger asynchronous abstractions. But the CompletableFutures are a very powerful starting point.
